@@ -24,18 +24,15 @@ class LokiCache{
     }
 
     static update(updateParams){
-        
-        const collection = inMemoryDB.getCollection("employeedetails")
-        collection.updateWhere(item=> { if( item.name === "Thor")
-                            return true
-                            else
-                                return false
-            },item=>{
-                item.name = "Thora"
-            })
-        const docs = LokiCache.getDocument({collection:"employeedetails","criteria":{"name":"Thora"},"projection":{}})
-        console.log(`docs is ${JSON.stringify(docs,null,2)}`)
-        return "done"
+        try{
+            console.log(`Update params in lokicache ${JSON.stringify(updateParams)}`);
+        const collection = inMemoryDB.getCollection(updateParams.collection);
+        collection.updateWhere(updateParams.filterFunction,updateParams.updateFunction);
+        return "done";
+        }catch(e){
+            console.log(`e is ${e.message} and stack is ${e.stack}`)
+            throw e
+        }
     }
 
     static getDocument(readOneParams){
