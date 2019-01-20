@@ -21,6 +21,26 @@ class LokiHandler{
 	static getDataFromLoki(){
 		return LokiCache.get({"collection":"employeedetails","criteria":{},"projection":{}});
 	}
+	
+	static updateDataInLoki(updateParams) {
+        //console.log(`update params in Handler---------------${JSON.stringify(updateParams)}`)
+        return LokiCache.update({
+            collection: "employeedetails",
+            filterFunction: item => {
+                if (item._id == updateParams.criteria)
+                    return true
+                else
+                    return false
+
+            },
+            updateFunction: item => {
+                item.name = updateParams.payLoad.name;
+                item.age = updateParams.payLoad.age;
+                item.contact = updateParams.payLoad.contact;
+                return item
+            }
+        });
+    }
 }
 
 module.exports=LokiHandler;
