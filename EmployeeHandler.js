@@ -19,6 +19,7 @@ class EmployeeHandler{
 		try {
 			// statements
 			ValidateFactory.validate(EMPLOYEE_PUT_SCHEMA,updateEmployee)
+			require("./LokiHandler").updateDataInLoki(updateEmployee);
 			return await new Employee().update(updateEmployee)
 		} catch(e) {
 			// statements
