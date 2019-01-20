@@ -130,8 +130,13 @@ class EmployeeRouter {
         router.put("/newUpdate",async (req,res)=>{
             try {
                 // statements
-                const updateResult=await EmployeeHandler.update(req.body)
-                Lok
+		const updateParams = {
+			db: dbName,
+			collection: "employeedetails",
+			criteria: req.body.criteria,
+			payLoad: req.body.payLoad
+		}
+                const updateResult=await EmployeeHandler.update(updateParams)
                 res.status(200).send(updateResult);
             } catch(e) {
                 // statements
